@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../bootstrap/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <script src="../js/ajax.js"></script>
+    <script>
+        window.onload = function(){
+            var btn = document.getElementById("submit");
+            var inp = document.getElementsByTagName("input");
+
+            btn.onclick = function(){
+                $ajax({
+                    method: "post",
+                    url: "../php/insertstudent.php",
+                    data: {
+                        name: inp[0].value,
+                        chinese: inp[1].value,
+                        english: inp[2].value,
+                        math: inp[3].value
+                    },
+                    success: function(result){
+                        // alert(result);
+                        var obj = JSON.parse(result);
+                        alert(obj.message);
+                    },
+                    error: function(msg){
+                        alert(msg);
+                    }
+                })
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2>录入 学员成绩</h2>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="name">姓名</label>
+                    <input type="text" class="form-control" name="name" id="name">
+                </div>
+                <div class="form-group">
+                    <label for="name">语文</label>
+                    <input type="text" class="form-control" name="chinese">
+                </div>
+                <div class="form-group">
+                    <label for="name">英语</label>
+                    <input type="text" class="form-control" name="english">
+                </div>
+                <div class="form-group">
+                    <label for="name">数学</label>
+                    <input type="text" class="form-control" name="math">
+                </div>
+                <div class="form-group">
+                    <button id="submit" class="btn btn-primary form-control">提交</button>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <a href="showStudent.html">查看学员成绩</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

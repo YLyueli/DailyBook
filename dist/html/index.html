@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../bootstrap/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <script src="../js/ajax.js"></script>
+    <script>
+        window.onload = function(){
+            var params = new URL(location.href).searchParams;
+            var id = params.get('id');
+            var user = document.getElementById("username");
+
+            var returnUrl = encodeURIComponent(id);
+            $ajax({
+                    method: "get",
+                    url: "../php/getuserinfo.php",
+                    data: {
+                        id: id
+                    },
+                    success: function(result){
+                        var obj = JSON.parse(result);
+                        // console.log(result);
+                        var object = JSON.parse(obj.message);
+                        // console.log(object);
+                        // console.log(object.username);
+                        user.innerHTML = object.username;
+                    },
+                    error: function(msg){
+                        alert(msg);
+                    }
+                })
+                var oas = document.getElementsByTagName("a");
+                var returnUrl = encodeURIComponent(id);
+                oas[0].onclick = function(){
+                    oas[0].href="index.html?id="+returnUrl;
+                }
+                oas[1].onclick = function(){
+                    oas[1].href="writeDaily.html?id="+returnUrl;
+                }
+                oas[2].onclick = function(){
+                    oas[2].href="dailyBook.html?id="+returnUrl;
+                }
+                oas[3].onclick = function(){
+                    oas[3].href="personalCenter.html?id="+returnUrl;
+                }
+                oas[4].onclick = function(){
+                    oas[4].href="safeSetting.html?id="+returnUrl;
+                }
+                var inf = document.getElementById("inf");
+                var info = document.getElementById("show-info");
+                image.mousedown = function(){
+                    info.style.display = "block";
+                }
+            
+        }
+        
+
+    </script>
+</head>
+<body>
+    <!-- header头部模块制作 start -->
+    <header>
+        <div class="search d7">
+            <div class="logo">
+                <img src="../images/logo1.jpeg" alt="" class="logo1">
+                <img src="../images/logo.jpeg" alt="" class="logo2">
+            </div>
+            <form> 
+              <input type="text" placeholder="搜索从这里开始...">
+              <button type="submit"></button>
+            </form>
+            <div class="login" id = "inf"><image class="bgImg" src="../images/love1.jpeg"></image><text id="username"></text></div>
+          <!-- </div>
+          <div id="show-info" class="alert alert-danger" role="alert">显示资料</div> -->
+    </header>
+    <!-- header头部模块制作 end -->
+    <!-- 左侧模块制作 start -->
+    <div class="left">
+        <ul class="nav nav-pills nav-stacked ll">
+            <li style="background-color: #f7c5e4;"role="presentation"><a href="index.html">日记</a></li>
+            <li role="presentation"><a href="writeDaily.html">写日记</a></li>
+            <li role="presentation"><a href="dailyBook.html">日记本</a></li>
+            <li role="presentation"><a href="personalCenter.html">个人中心</a></li>
+            <li role="presentation"><a href="safeSetting.html">安全设置</a></li>
+            <li role="presentation"><a href="login.html">退出登录</a></li>
+            <li><img src="../images/love1.jpeg" alt="" class="logo2"></li>
+        </ul>
+    </div>
+    <!-- 左侧模块制作 end -->
+    <!-- 右侧模块制作 start -->
+    <div class="right">
+        <div class="right-up">
+            <div class="char">共记录字符<br><br><span>100</span>  个</div>
+            <div class="time">共使用时间<br><br><span>100</span>  秒</div>
+            <div class="number">共记录日记<br><br><span>1</span>  篇</div>
+        </div>
+        <div class="right-down">
+              <div class="title">
+                  我的日记
+              </div>
+              <div class="content">
+                  <table>
+                      <tr>
+                          <td><a class="aa">我的日记-小花花</a></td>
+                          <td>个性</td>
+                          <td>2021-06-16</td>
+                          <td>
+                              <a>查看</a>
+                              <a>编辑</a>
+                              <a>删除</a>
+                          </td>
+                      </tr>
+                      <tr>
+                        <td><a class="aa">我的日记-小花花</a></td>
+                        <td>个性</td>
+                        <td>2021-06-16</td>
+                        <td>
+                            <a>查看</a>
+                            <a>编辑</a>
+                            <a>删除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="aa">我的日记-小花花</a></td>
+                        <td>个性</td>
+                        <td>2021-06-16</td>
+                        <td>
+                            <a>查看</a>
+                            <a>编辑</a>
+                            <a>删除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="aa">我的日记-小花花</a></td>
+                        <td>个性</td>
+                        <td>2021-06-16</td>
+                        <td>
+                            <a>查看</a>
+                            <a>编辑</a>
+                            <a>删除</a>
+                        </td>
+                    </tr>                      
+                    <tr>
+                        <td><a class="aa">我的日记-小花花</a></td>
+                        <td>个性</td>
+                        <td>2021-06-16</td>
+                        <td>
+                            <a>查看</a>
+                            <a>编辑</a>
+                            <a>删除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a class="aa">我的日记-小花花</a></td>
+                      <td>个性</td>
+                      <td>2021-06-16</td>
+                      <td>
+                          <a>查看</a>
+                          <a>编辑</a>
+                          <a>删除</a>
+                      </td>
+                  </tr>
+                  <tr>
+                    <td><a class="aa">我的日记-小花花</a></td>
+                      <td>个性</td>
+                      <td>2021-06-16</td>
+                      <td>
+                          <a>查看</a>
+                          <a>编辑</a>
+                          <a>删除</a>
+                      </td>
+                  </tr>
+                  <tr>
+                    <td><a class="aa">我的日记-小花花</a></td>
+                      <td>个性</td>
+                      <td>2021-06-16</td>
+                      <td>
+                          <a>查看</a>
+                          <a>编辑</a>
+                          <a>删除</a>
+                      </td>
+                    </tr>
+                  </table>
+              </div>
+        </div>
+    </div>
+    <!-- 右侧模块制作 end -->
+</body>
+</html>

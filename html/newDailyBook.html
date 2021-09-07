@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../bootstrap/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../css/newDailyBook.css">
+    <link rel="stylesheet" href="../css/buttons.css">
+    <script src="../js/ajax.js"></script>
+    <script>
+        
+        window.onload = function(){
+            var params = new URL(location.href).searchParams;
+            var id = params.get('id');
+            var user = document.getElementById("username");
+
+            $ajax({
+                    method: "get",
+                    url: "../php/getuserinfo.php",
+                    data: {
+                        id: id
+                    },
+                    success: function(result){
+                        var obj = JSON.parse(result);
+                        // console.log(result);
+                        var object = JSON.parse(obj.message);
+                        // console.log(object);
+                        // console.log(object.username);
+                        user.innerHTML = object.username;
+                    },
+                    error: function(msg){
+                        alert(msg);
+                    }
+            })
+            var oas = document.getElementsByTagName("a");
+            var returnUrl = encodeURIComponent(id);
+            oas[0].onclick = function(){
+                oas[0].href="index.html?id="+returnUrl;
+            }
+            oas[1].onclick = function(){
+                oas[1].href="writeDaily.html?id="+returnUrl;
+            }
+            oas[2].onclick = function(){
+                oas[2].href="dailyBook.html?id="+returnUrl;
+            }
+            oas[3].onclick = function(){
+                oas[3].href="personalCenter.html?id="+returnUrl;
+            }
+            oas[4].onclick = function(){
+                oas[4].href="safeSetting.html?id="+returnUrl;
+            }
+            
+            var btn = document.getElementById("submit");
+            var inp = document.getElementsByTagName("input");
+            btn.onclick = function(){
+                $ajax({
+                    method: "post",
+                    url: "../php/newDailyBook.php",
+                    data: {
+                        userId: id,
+                        bookname: inp[1].value,
+                        booklabel: inp[2].value,
+                        addTime: new Date().getTime()
+                    },
+                    success: function(result){
+                        var obj = JSON.parse(result);
+                        setTimeout(function(){
+                            location.href = "dailyBook.html?id="+returnUrl;
+                        }, 1000);
+                        
+                        alert("日记本创建成功");
+                    },
+                    error: function(msg){
+                        alert(msg);
+                    }
+                })
+            }
+        }
+        
+
+    </script>
+</head>
+<body>
+    <!-- header头部模块制作 start -->
+    <header>
+        <div class="search d7">
+            <div class="logo">
+                <img src="../images/logo1.jpeg" alt="" class="logo1">
+                <img src="../images/logo.jpeg" alt="" class="logo2">
+            </div>
+            <form> 
+              <input type="text" placeholder="搜索从这里开始...">
+              <button type="submit"></button>
+            </form>
+            <div class="login"><image class="bgImg" src="../images/love1.jpeg"></image><text id="username"></text></div>
+          </div>
+    </header>
+    <!-- header头部模块制作 end -->
+    <!-- 左侧模块制作 start -->
+    <div class="left">
+        <ul class="nav nav-pills nav-stacked ll">
+            <li role="presentation"><a href="index.html">日记</a></li>
+            <li role="presentation"><a href="writeDaily.html">写日记</a></li>
+            <li style="background-color: #f7c5e4;" role="presentation"><a href="dailyBook.html">日记本</a></li>
+            <li role="presentation"><a href="personalCenter.html">个人中心</a></li>
+            <li role="presentation"><a href="safeSetting.html">安全设置</a></li>
+            <li role="presentation"><a href="login.html">退出登录</a></li>
+            <li><img src="../images/love1.jpeg" alt="" class="logo2"></li>
+        </ul>
+    </div>
+    <!-- 左侧模块制作 end -->
+    <!-- 右侧模块制作 start -->
+    <div class="right">
+        <div class="content">
+            <div class="title">
+                <span>日记本</span>
+            </div>
+            <div class="info">
+                <div class="info1">
+                    <label class="control-label" for="bookname">名称</label>
+                    <input class="form-control" type="text" id="bookname"  name="bookname" value="">
+                </div>
+                <div class="info1">
+                    <label class="control-label" for="booklabel">标签</label>
+                    <input class="form-control" type="text" id="booklabel" name="booklabel" value="">
+                </div>
+            <button class=" save button button-raised " id="submit">添加</button>
+        </div>
+    </div>
+    <!-- 右侧模块制作 end -->
+   
+</body>
+</html>

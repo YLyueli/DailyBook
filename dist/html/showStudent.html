@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../bootstrap/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <script src="../js/ajax.js"></script>
+        
+    </script>
+    <script>
+        window.onload = function(){
+            var oBtn = document.getElementById("btn1");
+            var oT1 = document.getElementById("t1");
+            oBtn.onclick = function(){
+                $ajax({
+                    method: "get",
+                    url: "../php/showStudent.php",
+                    success: function(result){
+                        var arr = JSON.parse(result);
+                        var str = ``;
+                    for(var i = 0; i<arr.length;i++){
+                        str += `<tr>
+                            <td>${arr[i].id}</td>
+                            <td>${arr[i].name}</td>
+                            <td>${arr[i].chinese}</td>
+                            <td>${arr[i].english}</td>
+                            <td>${arr[i].math}</td>
+                        </tr>`
+                    }
+                    oT1.innerHTML = str;
+                },
+                    error: function(msg){
+                        alert(msg);
+                    }
+                })
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- 布局容器：根据当前浏览器屏幕的不同进行自适应 -->
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2>获取学员成绩</h2>
+            </div>
+            <div class="panel-body">
+                <button id = 'btn1' class="btn btn-primary">获取所有学员信息</button>
+                <br>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <td>学号</td>
+                            <td>姓名</td>
+                            <td>语文</td>
+                            <td>英语</td>
+                            <td>数学</td>
+                        </tr>
+                    </thead>
+                    <tbody id='t1'>
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer">
+                <a href="insertStudent.html">插入学员成绩</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+html,body{
+    height:100%;
+}       
+body{
+    background: url(../images/bg7.jpeg) no-repeat;
+    background-size: 100% 100%;
+}
+.logo img{
+    position: absolute; 
+    top: 30px;
+    right: 38px;
+    width: 160px;
+    height: 60px;
+}
+a {
+    color: #D9534F;
+}
+#login {
+    width: 360px;
+    margin: 180px auto;
+    box-shadow: 2px 0 8px -4px #000;
+}
+#alert-info{
+    margin: 2px;
+    padding: 2px;
+    text-align: center;
+    margin-bottom: 10px;
+    display: none;
+}

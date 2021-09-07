@@ -1,0 +1,268 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<HEAD>
+    <TITLE>Select Demo</TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../bootstrap/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/writeDaily.css">
+    <link rel="stylesheet" href="../css/buttons.css">
+<STYLE type=text/css>
+   
+    #uboxstyle  {
+        position:absolute;
+        left: 450px;
+        margin: 20px 0 20px 20px;
+    }
+    #uboxstyle DIV.tag_select {
+        PADDING-RIGHT: 10px; DISPLAY: block; PADDING-LEFT: 10px; border-radius: 6px;background-color: #EEEEEE; PADDING-BOTTOM: 0px; WIDTH: 170px; COLOR: #757575; LINE-HEIGHT: 34px; PADDING-TOP: 0px; HEIGHT: 34px
+    }
+    #uboxstyle DIV.tag_select_hover {
+        PADDING-RIGHT: 10px; DISPLAY: block; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; WIDTH: 170px; COLOR: #757575; LINE-HEIGHT: 34px; PADDING-TOP: 0px; HEIGHT: 34px;background-color: #EEEEEE;border-radius: 6px;
+    }
+    #uboxstyle DIV.tag_select_open {
+        PADDING-RIGHT: 10px; DISPLAY: block; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; WIDTH: 170px; COLOR: #757575; LINE-HEIGHT: 34px; PADDING-TOP: 0px; HEIGHT: 34px;background-color: #EEEEEE;border-radius: 6px;
+    }
+    #uboxstyle UL.tag_options {
+        PADDING-RIGHT: 0px; PADDING-LEFT: 0px;PADDING-BOTTOM: 5px; MARGIN: 0px; WIDTH: 170px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none; POSITION: absolute;background-color: #EEEEEE;border-radius: 6px;
+    }
+    #uboxstyle UL.tag_options LI {
+        PADDING-RIGHT: 10px; DISPLAY: block; PADDING-LEFT: 10px;  PADDING-BOTTOM: 0px; WIDTH: 170px; COLOR: #757575; LINE-HEIGHT: 24px; PADDING-TOP: 0px; HEIGHT: 34px; TEXT-DECORATION: none;background-color: #EEEEEE;border-radius: 6px;
+    }
+    #uboxstyle UL.tag_options LI.open_hover {
+        COLOR: #757575;background-color: #fcfcfc;
+    }
+    #uboxstyle UL.tag_options LI.open_selected {
+         COLOR: #757575;background-color: #fcfcfc;
+    }
+    </STYLE>
+    <SCRIPT>
+        var selects = document.getElementsByTagName('select');
+        var isIE = (document.all && window.ActiveXObject && !window.opera) ? true : false;
+        function $(id) {
+        return document.getElementById(id);
+        }
+        function stopBubbling (ev) { 
+        ev.stopPropagation();
+        }
+        function rSelects() {
+        for (i=0;i<selects.length;i++){
+            selects[i].style.display = 'none';
+            select_tag = document.createElement('div');
+            select_tag.id = 'select_' + selects[i].name;
+            select_tag.className = 'select_box';
+            selects[i].parentNode.insertBefore(select_tag,selects[i]);
+            select_info = document.createElement('div'); 
+            select_info.id = 'select_info_' + selects[i].name;
+            select_info.className='tag_select';
+            select_info.style.cursor='pointer';
+            select_tag.appendChild(select_info);
+            select_ul = document.createElement('ul'); 
+            select_ul.id = 'options_' + selects[i].name;
+            select_ul.className = 'tag_options';
+            select_ul.style.position='absolute';
+            select_ul.style.display='none';
+            select_ul.style.zIndex='999';
+            select_tag.appendChild(select_ul);
+            rOptions(i,selects[i].name);
+            
+            mouseSelects(selects[i].name);
+            if (isIE){
+            selects[i].onclick = new Function("clickLabels3('"+selects[i].name+"');window.event.cancelBubble = true;");
+            }
+            else if(!isIE){
+            selects[i].onclick = new Function("clickLabels3('"+selects[i].name+"')");
+            selects[i].addEventListener("click", stopBubbling, false);
+            }    
+        }
+        }
+        
+        function rOptions(i, name) {
+        var options = selects[i].getElementsByTagName('option');
+        var options_ul = 'options_' + name;
+        for (n=0;n<selects[i].options.length;n++){ 
+            option_li = document.createElement('li');
+            option_li.style.cursor='pointer';
+            option_li.className='open';
+            $(options_ul).appendChild(option_li);
+            option_text = document.createTextNode(selects[i].options[n].text);
+            option_li.appendChild(option_text);
+            option_selected = selects[i].options[n].selected;
+            if(option_selected){
+            option_li.className='open_selected';
+            option_li.id='selected_' + name;
+            $('select_info_' + name).appendChild(document.createTextNode(option_li.innerHTML));
+            }
+            
+            option_li.onmouseover = function(){ this.className='open_hover';}
+            option_li.onmouseout = function(){
+            if(this.id=='selected_' + name){
+                this.className='open_selected';
+            }
+            else {
+                this.className='open';
+            }
+            }
+            option_li.onclick = new Function("clickOptions("+i+","+n+",'"+selects[i].name+"')");
+        }
+        }
+        function mouseSelects(name){
+        var sincn = 'select_info_' + name;
+        $(sincn).onmouseover = function(){ if(this.className=='tag_select') this.className='tag_select_hover'; }
+        $(sincn).onmouseout = function(){ if(this.className=='tag_select_hover') this.className='tag_select'; }
+        if (isIE){
+            $(sincn).onclick = new Function("clickSelects('"+name+"');window.event.cancelBubble = true;");
+        }
+        else if(!isIE){
+            $(sincn).onclick = new Function("clickSelects('"+name+"');");
+            $('select_info_' +name).addEventListener("click", stopBubbling, false);
+        }
+        }
+        function clickSelects(name){
+        var sincn = 'select_info_' + name;
+        var sinul = 'options_' + name;
+        for (i=0;i<selects.length;i++){ 
+            if(selects[i].name == name){        
+            if( $(sincn).className =='tag_select_hover'){
+                $(sincn).className ='tag_select_open';
+                $(sinul).style.display = '';
+            }
+            else if( $(sincn).className =='tag_select_open'){
+                $(sincn).className = 'tag_select_hover';
+                $(sinul).style.display = 'none';
+            }
+            }
+            else{
+            $('select_info_' + selects[i].name).className = 'tag_select';
+            $('options_' + selects[i].name).style.display = 'none';
+            }
+        }
+        }
+        function clickOptions(i, n, name){    
+        var li = $('options_' + name).getElementsByTagName('li');
+        $('selected_' + name).className='open';
+        $('selected_' + name).id='';
+        li[n].id='selected_' + name;
+        li[n].className='open_hover';
+        $('select_' + name).removeChild($('select_info_' + name));
+        select_info = document.createElement('div');
+            select_info.id = 'select_info_' + name;
+            select_info.className='tag_select';
+            select_info.style.cursor='pointer';
+        $('options_' + name).parentNode.insertBefore(select_info,$('options_' + name));
+        mouseSelects(name);
+        $('select_info_' + name).appendChild(document.createTextNode(li[n].innerHTML));
+        $( 'options_' + name ).style.display = 'none' ;
+        $( 'select_info_' + name ).className = 'tag_select';
+        selects[i].options[n].selected = 'selected';
+        }
+        window.onload = function(e) {
+        bodyclick = document.getElementsByTagName('body').item(0);
+        rSelects();
+        bodyclick.onclick = function(){
+            for (i=0;i<selects.length;i++){ 
+            $('select_info_' + selects[i].name).className = 'tag_select';
+            $('options_' + selects[i].name).style.display = 'none';
+            }
+
+        }
+        var params = new URL(location.href).searchParams;
+            var id = params.get('id');
+            var user = document.getElementById("username");
+
+            $ajax({
+                    method: "get",
+                    url: "../php/getuserinfo.php",
+                    data: {
+                        id: id
+                    },
+                    success: function(result){
+                        var obj = JSON.parse(result);
+                        // console.log(result);
+                        var object = JSON.parse(obj.message);
+                        // console.log(object);
+                        // console.log(object.username);
+                        user.innerHTML = object.username;
+                    },
+                    error: function(msg){
+                        alert(msg);
+                    }
+                })
+                var oas = document.getElementsByTagName("a");
+                var returnUrl = encodeURIComponent(id);
+                oas[0].onclick = function(){
+                    oas[0].href="index.html?id="+returnUrl;
+                }
+                oas[1].onclick = function(){
+                    oas[1].href="writeDaily.html?id="+returnUrl;
+                }
+                oas[2].onclick = function(){
+                    oas[2].href="dailyBook.html?id="+returnUrl;
+                }
+                oas[3].onclick = function(){
+                    oas[3].href="personalCenter.html?id="+returnUrl;
+                }
+                oas[4].onclick = function(){
+                    oas[4].href="safeSetting.html?id="+returnUrl;
+                }
+    }
+</SCRIPT>
+<META content="MSHTML 6.00.2900.3199" name=GENERATOR>
+</HEAD>
+<BODY>
+<!-- header头部模块制作 start -->
+    <header>
+        <div class="search d7">
+            <div class="logo">
+                <img src="../images/logo1.jpeg" alt="" class="logo1">
+                <img src="../images/logo.jpeg" alt="" class="logo2">
+            </div>
+            <form> 
+              <input type="text" placeholder="搜索从这里开始...">
+              <button type="submit"></button>
+            </form>
+            <div class="login"><image class="bgImg" src="../images/love1.jpeg"></image><text id="username"></text></div>
+          </div>
+    </header>
+    <!-- header头部模块制作 end -->
+    <!-- 左侧模块制作 start -->
+    <div class="left">
+        <ul class="nav nav-pills nav-stacked ll">
+            <li role="presentation"><a href="index.html">日记</a></li>
+            <li style="background-color: #f7c5e4;" role="presentation"><a href="writeDaily.html">写日记</a></li>
+            <li role="presentation"><a href="dailyBook.html">日记本</a></li>
+            <li role="presentation"><a href="personalCenter.html">个人中心</a></li>
+            <li role="presentation"><a href="safeSetting.html">安全设置</a></li>
+            <li role="presentation"><a href="login.html">退出登录</a></li>
+            <li><img src="../images/love1.jpeg" alt="" class="logo2"></li>
+        </ul>
+    </div>
+    <!-- 左侧模块制作 end -->
+    <!-- 右侧模块制作 start -->
+    <div class="right">
+        <div class="content">
+            <div class="title">
+                <span>用户信息</span>
+            </div>
+            <div class="input-group tt">
+                <span class="input-group-addon" id="basic-addon1">标题</span>
+                <input type="text" class="form-control" aria-describedby="basic-addon1">
+                
+            </div> 
+            <DIV id=uboxstyle>
+                <SELECT id=language name=language>
+                    <OPTION value=English selected>请选择日记本</OPTION>
+                    <OPTION value=简体中文>哈哈哈</OPTION>
+                    <OPTION value=日本語>呵呵呵</OPTION>
+                    <OPTION value=http://www.geekso.com>哒哒哒</OPTION>
+                </SELECT>
+            </DIV>
+            
+            <textarea name="" id="" cols="30" rows="10"></textarea>
+            <button class=" save button button-raised  ">保存日记</button>
+        </div>
+    </div>
+    <!-- 右侧模块制作 end -->
+    
+</BODY>
+</HTML>

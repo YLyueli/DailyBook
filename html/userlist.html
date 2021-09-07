@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../bootstrap/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/buttons.css">
+    <script src="../js/ajax.js"></script>
+    <script src="../js/time.js"></script>
+    <script>
+        window.onload = function(){
+            var oBtn = document.getElementById("btn1");
+            var oT1 = document.getElementById("t1");
+
+            oBtn.onclick = function(){
+                $ajax({
+                    method: "get",
+                    url: "../php/userlist.php",
+                    success: function(result){
+                        alert(result);
+                        var arr = JSON.parse(result);
+                        var str = ``;
+                        for(var i = 0; i<arr.length;i++){
+                            str += `<tr>
+                                <td>${arr[i].id}</td>
+                                <td>${arr[i].username}</td>
+                                <td>${arr[i].password}</td>
+                                <td>${showTime(Number(arr[i].create_time))}</td>
+                                <td id = '${arr[i].id}'>
+                                    <a href="#">删除</a>
+                                    /
+                                    <a href="update.html?id=${arr[i].id}">修改</a>
+                                    </td>
+                            </tr>`
+                        }
+                        oT1.innerHTML = str;
+                    },
+                    error: function(msg){
+                        alert(msg);
+                    }
+                })
+            }
+
+            oT1.onclick = function(ev){
+                var e = ev || window.event;
+                var target = e.target || window.event.srcElement;
+                if(target.nodeName.toLowerCase() == "a" && target.innerHTML == "删除"){
+                    var id = target.parentNode.id;
+                    $ajax({
+                        method: "get",
+                        url: "../php/delete.php",
+                        data: {
+                            id: id
+                        },
+                        success: function(result){
+                            var obj = JSON.parse(result);
+                            if(!obj.code){
+                                oT1.removeChild(target.parentNode.parentNode);
+                            } else {
+                                alert(obj.message);
+                            }
+                        },
+                        error: function(msg){
+                            alert(msg);
+                        }
+                    })
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h2>获取用户列表</h2>
+            </div>
+            <div class="panel-body">
+                <button id = 'btn1' class="button button-glow button-rounded button-caution">获取所有用户信息</button>
+                <br>
+                <br>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <td>用户号</td>
+                            <td>用户名</td>
+                            <td>密码</td>
+                            <td>注册日期</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tbody id='t1'>
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer">
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

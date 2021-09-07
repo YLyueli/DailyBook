@@ -1,0 +1,176 @@
+* {
+    box-sizing: border-box;
+    font-family: 'PingFang SC';
+    padding: 0;
+    margin: 0;
+}
+label {
+    font-weight:normal;
+    color: #bbb8b8;
+    margin: 10px;
+    padding-left: 10px;
+}
+input{
+    margin-left: 20px;
+}
+header {
+    height: 80px;
+    border-bottom: 3px solid #f7c5e4;
+}
+header .logo .logo1{
+    position: absolute;
+    margin-top: 16px;
+    left: 120px;
+    width: 58px;
+    height: 48px;
+}
+header .logo .logo2{
+    position: absolute;
+    margin-top: 26px;
+    left: 220px;
+    width: 180px;
+    height: 38px;
+}
+/* header .login {
+    position: absolute;
+    margin-top: 22px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    color: #757575;
+    left: 1120px;
+    width: 280px;
+}
+header .login a {
+    color: #757575;
+    text-decoration: none;
+}
+header .login a:hover {
+    color: black;
+}
+header .login span {
+    display: inline-block;
+    padding: 0 10px;
+} */
+header .login{ 
+    position: absolute;
+    width: 300px;
+    height: 60px;
+    line-height: 35px;
+    left: 1120px;
+    margin: 10px 20px 20px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+header .login .bgImg{ 
+    width: 45px;
+    height: 45px;
+    border-radius: 30px;
+    border: 1px solid #f1eded;
+    margin-right: 10px;
+}
+
+.d7:after {
+    content:""; 
+    clear:both; 
+    display:table
+}
+.d7 input {
+    margin-top: 18px;
+    width: 280px;
+    height: 42px;
+    padding-left: 15px;
+    border-radius: 42px;
+    border: 1px solid #f7c5e4;
+    background: #ffffff;
+    outline: none;
+    position: absolute;
+    left: 700px;
+    color: #858585;
+}
+
+.d7 button {
+    margin-top: 18px;
+    width: 42px;
+    height: 42px;
+    background: none;
+    border: none;
+    position: absolute;
+    left: 940px;
+}
+.d7 button:before{
+    content: "\f002";
+    font-family: FontAwesome;
+    color: #f7c5e4;
+}
+html, body {
+    height: 100%;
+} 
+.left {
+    position: absolute;
+    left: 120px;
+    width: 200px;
+    height: 500px;
+    margin: 46px 10px 0 0;
+}
+.left .ll{
+    height: 480px;
+    border: 1px solid #f1eded;
+    border-radius: 3px;
+    color: #757575;
+}
+.left .ll li a{
+    color: #757575;
+}
+.left .ll li a:hover{
+    background-color: #f7c5e4;
+}
+.left .ll img{
+    margin-top: 25px;
+    width: 200px;
+    height: 200px;
+}
+.right {
+    left: 380px;
+    position: absolute;
+    margin: 46px 0 0 60px;   
+    width: 600px;
+}
+.right .content {
+    position: relative;
+    width: 720px;
+    height: 600px;
+    border-radius: 3px;
+    border: 1px solid #f1eded;
+} 
+.right .content .title{
+    padding: 16px 0 16px 0;
+    padding-left: 16px;
+    font-size: 16px;
+    border-bottom: 1px solid #f1eded;
+    color: #fa77c8;
+} 
+.right .content .info{
+    padding: 10px 0 25px 0;
+    font-size: 16px;
+} 
+.right .content .info1{
+    margin: 10px 0 20px 0;
+} 
+.right .content .info1 input{
+    width: 500px;
+} 
+.right .content .info1 textarea{
+    margin-left: 20px;
+    width: 500px;
+} 
+.right .content .info2{
+    color:rgb(84,84,84);
+}
+.right .content button {
+    margin-left: 20px;
+    border-radius: 3px;
+}
+
+

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <link rel="stylesheet" href="../bootstrap/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <script src="../js/ajax.js"></script>
+    <script>
+        window.onload = function(){
+            var oBtn = document.getElementById("btn");
+            var oAlert = document.getElementById("alert-info");
+            var aInputs = document.getElementsByTagName("input");
+            
+            oBtn.onclick = function(){
+                $ajax({
+                    method: "post",
+                    url: "../php/login.php",
+                    data: {
+                        username: aInputs[0].value,
+                        password: aInputs[1].value
+                    },
+                    success: function(result){
+                        var obj = JSON.parse(result);
+                        var object = JSON.parse(obj.message);
+                        var id = object.id;
+                        if(obj.code){
+                            oAlert.className = 'alert alert-danger';
+                        }else{
+                            oAlert.className = 'alert alert-success';
+                            var returnUrl = encodeURIComponent(id);
+                            setTimeout(function(){
+                                location.href = "index.html?id="+returnUrl;
+                            }, 1000);
+                            obj.message="登录成功";
+                        }
+                        oAlert.style.display = 'block';
+                        oAlert.innerHTML = obj.message;
+                    },
+                    error: function(msg){
+                        alert(msg);
+                    }
+                })
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="logo">
+        <img src="../images/logo.jpeg" alt="">
+    </div>
+    <div class="contaier" >
+        <div class="panel panel-danger" id="login">
+            <div class="panel-heading">
+                登录
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" name="username" class="form-control" autocomplete="off"> 
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="text" name="password" class="form-control" autocomplete="off"> 
+                </div>
+                <div id="alert-info" class="alert alert-danger" role="alert">1</div>
+                <a href="register.html">立即注册</a>
+                <button class="btn btn-danger pull-right" id="btn">登录</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

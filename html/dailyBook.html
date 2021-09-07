@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../bootstrap/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'PingFang SC';
+            padding: 0;
+            margin: 0;
+        }
+        header {
+            height: 80px;
+            border-bottom: 3px solid #f7c5e4;
+        }
+        header .logo .logo1{
+            position: absolute;
+            margin-top: 16px;
+            left: 120px;
+            width: 58px;
+            height: 48px;
+        }
+        header .logo .logo2{
+            position: absolute;
+            margin-top: 26px;
+            left: 220px;
+            width: 180px;
+            height: 38px;
+        }
+        header .login{ 
+            position: absolute;
+            width: 300px;
+            height: 60px;
+            line-height: 35px;
+            left: 1120px;
+            margin: 10px 20px 20px 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        header .login .bgImg{ 
+            width: 45px;
+            height: 45px;
+            border-radius: 30px;
+            border: 1px solid #f1eded;
+            margin-right: 10px;
+        }
+
+        .d7:after {
+            content:""; 
+            clear:both; 
+            display:table
+        }
+        .d7 input {
+            margin-top: 18px;
+            width: 280px;
+            height: 42px;
+            padding-left: 15px;
+            border-radius: 42px;
+            border: 1px solid #f7c5e4;
+            background: #ffffff;
+            outline: none;
+            position: absolute;
+            left: 700px;
+            color: #858585;
+        }
+
+        .d7 button {
+            margin-top: 18px;
+            width: 42px;
+            height: 42px;
+            background: none;
+            border: none;
+            position: absolute;
+            left: 940px;
+        }
+        .d7 button:before{
+            content: "\f002";
+            font-family: FontAwesome;
+            color: #f7c5e4;
+        }
+        html, body {
+            height: 100%;
+        } 
+        .left {
+            position: absolute;
+            left: 120px;
+            width: 200px;
+            height: 500px;
+            margin: 46px 10px 0 0;
+        }
+        .left .ll{
+            height: 480px;
+            border: 1px solid #f1eded;
+            border-radius: 3px;
+            color: #757575;
+        }
+        .left .ll li a{
+            color: #757575;
+        }
+        .left .ll li a:hover{
+            background-color: #f7c5e4;
+        }
+        .left .ll img{
+            margin-top: 25px;
+            width: 200px;
+            height: 200px;
+        }
+        .right {
+            left: 330px;
+            position: absolute;
+            margin: 46px 0 0 10px;   
+        }
+        .right .right-down{
+            width: 800px;
+            height: 600px;
+        }
+        .right .right-down .title {
+            width: 800px;
+            height: 60px;
+            line-height: 60px;
+            font-size: 16px;
+            padding-left: 20px;
+            border: 1px solid #f1eded;
+            background-color: #fff;
+            color: #fa77c8;
+        }
+        .right .right-down .title a{
+            text-decoration: none;
+            margin-left: 560px;
+            color: #fa77c8;
+        }
+        .right .right-down .title a:hover{
+            cursor: pointer;
+        }
+        .right .right-down .content {
+            width: 800px;
+            line-height: 80px;
+            padding: 12px;
+            font-size: 14px;
+            color: #757575;
+            border: 1px solid #f1eded;
+        }
+        .right .right-down .content a{
+            cursor: pointer;
+            color: #757575;
+            text-decoration: none;
+        }
+        .right .right-down .content a:hover{
+            cursor: pointer;
+            text-decoration: none;
+            color: #fa77c8;
+        }
+        .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+            padding: 14px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border-top: 1px solid #f1eded;
+        }
+    </style>
+    <script src="../js/ajax.js"></script>
+    <script src="../js/time.js"></script>
+    <script>        
+        window.onload = function(){
+            var params = new URL(location.href).searchParams;
+            var id = params.get('id');
+            var user = document.getElementById("username");
+
+            $ajax({
+                method: "get",
+                url: "../php/getuserinfo.php",
+                data: {
+                    id: id
+                },
+                success: function(result){
+                    var obj = JSON.parse(result);
+                    console.log(obj);
+                    var object = JSON.parse(obj.message);
+                    console.log(object);
+                    console.log(object.username);
+                    user.innerHTML = object.username;
+                },
+                error: function(msg){
+                    alert(msg);
+                }
+            })
+            var oas = document.getElementsByTagName("a");
+            var returnUrl = encodeURIComponent(id);
+            oas[0].onclick = function(){
+                oas[0].href="index.html?id="+returnUrl;
+            }
+            oas[1].onclick = function(){
+                oas[1].href="writeDaily.html?id="+returnUrl;
+            }
+            oas[2].onclick = function(){
+                oas[2].href="dailyBook.html?id="+returnUrl;
+            }
+            oas[3].onclick = function(){
+                oas[3].href="personalCenter.html?id="+returnUrl;
+            }
+            oas[4].onclick = function(){
+                oas[4].href="safeSetting.html?id="+returnUrl;
+            }
+            // alert(oas[0].href);
+            // alert(oas[1].href);
+            // alert(oas[2].href);
+            // alert(oas[3].href);
+            // alert(oas[4].href);
+            // alert(oas[5].href);
+            // alert(oas[6].href);
+            oas[6].onclick = function(){
+                oas[6].href="newDailyBook.html?id="+returnUrl;
+                // alert(oas[6].href);
+            }
+            var oT1 = document.getElementById("t1");
+            $ajax({
+                method: "get",
+                url: "../php/showDailyBook.php",
+                success: function(result){
+                    // console.log(result);
+                    var arr = JSON.parse(result);
+                    var str = ``;
+                    for(var i = 0; i<arr.length;i++){
+                        if(arr[i].user_id == id){
+                            str += `<tr>
+                            <td><a href="classify.html?id=${id}&name=${arr[i].book_name}">${arr[i].book_name}</a></td>
+                            <td>${arr[i].label}</td>
+                            <td>${showTime(Number(arr[i].create_book_time))}</td>
+                            <td>
+                                <a href="#" class="${arr[i].id}">删除</a>/<a href="dailybookContent.html?id=${id}&dailybookId=${arr[i].id}">修改</a>
+                            </td>
+                        </tr>`;
+                        }
+                    }
+                    // console.log(str);
+                    oT1.innerHTML = str;
+                },
+                error: function(msg){
+                    alert(msg);
+                }
+            }) 
+            oT1.onclick = function(ev){
+                    var e = ev || window.event;
+                    var target = e.target || window.event.srcElement;
+                    if(target.nodeName.toLowerCase() == "a" && target.innerHTML == "删除"){
+                        var id = target.parentNode.id;
+                        // alert(target.className);
+                        if(confirm("真的要删除吗?")){
+                            $ajax({
+                                method: "get",
+                                url: "../php/deleteDailybook.php",
+                                data: {
+                                    dailybookId: target.className
+                                },
+                                success: function(result){
+                                    var obj = JSON.parse(result);
+                                    if(!obj.code){
+                                        oT1.removeChild(target.parentNode.parentNode);
+                                    } else {
+                                        alert(obj.message);
+                                    }
+                                },
+                                error: function(msg){
+                                    alert(msg);
+                                }
+                            })
+                        }
+                        
+                    }
+                }
+
+        }
+    function showTime(time){
+        var d = new Date(time);
+        var year = d.getFullYear();
+        var month = d.getMonth() + 1;   //0~11
+        var date = d.getDate();
+
+        var week = d.getDay();  //0~6  0是周日
+
+        week = numOfChinese(week);
+
+        var hour = doubleNum(d.getHours());
+        var min = doubleNum(d.getMinutes());
+        var sec = doubleNum(d.getSeconds());
+
+        var str = year + "-" + month + "-" + date; 
+        return str;
+    }
+    </script>
+</head>
+<body>
+    <!-- header头部模块制作 start -->
+    <header>
+        <div class="search d7">
+            <div class="logo">
+                <img src="../images/logo1.jpeg" alt="" class="logo1">
+                <img src="../images/logo.jpeg" alt="" class="logo2">
+            </div>
+            <form> 
+              <input type="text" placeholder="搜索从这里开始...">
+              <button type="submit"></button>
+            </form>
+            <div class="login"><image class="bgImg" src="../images/love1.jpeg"></image><text id="username"></text></div>
+          </div>
+    </header>
+    <!-- header头部模块制作 end -->
+    <!-- 左侧模块制作 start -->
+    <div class="left">
+        <ul class="nav nav-pills nav-stacked ll">
+            <li role="presentation"><a href="index.html">日记</a></li>
+            <li role="presentation"><a href="writeDaily.html">写日记</a></li>
+            <li style="background-color: #f7c5e4;" role="presentation"><a href="dailyBook.html">日记本</a></li>
+            <li role="presentation"><a href="personalCenter.html">个人中心</a></li>
+            <li role="presentation"><a href="safeSetting.html">安全设置</a></li>
+            <li role="presentation"><a href="login.html">退出登录</a></li>
+            <li><img src="../images/love1.jpeg" alt="" class="logo2"></li>
+        </ul>
+    </div>
+    <!-- 左侧模块制作 end -->
+    <!-- 右侧模块制作 start -->
+    <div class="right">
+        <div class="right-down">
+              <div class="title">
+                  我的日记本
+                  <a href="newDailyBook.html" id="newnew">新建日记本</a>
+              </div>
+              <div class="content">
+                <table class=" cc table table-hover" >
+                    <thead style="width:10px">
+                        <tr>
+                            <td>名称</td>
+                            <td>标签</td>
+                            <td>创建日期</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tbody id='t1'> </tbody>
+                </table>
+              </div>
+        </div>
+    </div>
+    <!-- 右侧模块制作 end -->
+   
+</body>
+</html>
